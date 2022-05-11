@@ -1,8 +1,8 @@
 ---
-layout: post
-title:  "ffmpeg"
+layout: default
+title:  "How to compile FFmpeg and its commonly used commonds"
 date:   2022-05-10 18:31:33 +0800
-categories: jekyll update
+categories: ffmmpeg
 ---
 
 # Abstract
