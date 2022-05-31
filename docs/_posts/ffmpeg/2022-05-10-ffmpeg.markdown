@@ -260,6 +260,13 @@ When encoding with libx264, you can set the H.264 profile and level with:
 * -profile:v – one of high, main, or baseline (and others, but this is irrelevant here)
 * -level:v – as defined in Annex A of the H.264 standard, e.g., 4.0.
 
+## Resize video resolution
+~~~
+  $ ffmpeg -i input.mp4 -vf scale=-1:720 output.mp4
+  $ ffmpeg -i input.mp4 -vf scale=1280:720 output.mp4
+  $ ffmpeg -i input.mp4 -vf scale=1280:-1 output.mp4
+~~~
+
 # Use ffmpeg to join video files
 see [create_mosaic_out_several_input_videos][create_mosaic_out_several_input_videos]
 
