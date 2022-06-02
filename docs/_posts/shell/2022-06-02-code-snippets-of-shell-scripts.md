@@ -72,7 +72,7 @@ if [ $(grep -c "namespace " $file) -ne 0 ];then
 fi
 ```
 
-### Checking character is uppper or lower
+# Checking character is uppper or lower
 
 ```Shell
 cat $symbols_file_uniq | while read symbol;do
