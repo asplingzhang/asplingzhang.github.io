@@ -23,5 +23,5 @@ About how to use VNC to connect to linux station through mac machine.
 # Connect to linux station at mac machine
 Use VNC to connect to remote desktop.Input the required password in the prompt window.
 ~~~
-  $ vnc://guding@30.19.109.22
+  $ vnc://{userame}@{remote-ip}
 ~~~
