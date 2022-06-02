@@ -24,13 +24,16 @@ No data reports showd at Google analytics,though these things has been done
 ```
 * Config `google_analytics` at `_config.yml`
 ```yml
-google_analytics: UA-xxxxxx-x
+google_analytics: G-xxxxxx
 ```
 * Republished our sit
 
 # Resolution
 * Change our account supporting `Google Analytics(Universal Analytics)`,`Google Analytics 4` is not supported by github pages powered by jekyll.Details please see [Set Google Universal Analytics for your site](https://support.google.com/analytics/answer/10269537)
-* And set `google_analytics` with tracing-id started with `UA-` rather than `G-`,tracing-id like `G-xxxx` is of `Google Analytics 4`.
+* And set `google_analytics` at `_config.yml` with tracing-id started with `UA-` rather than `G-`,tracing-id like `G-xxxx` is of `Google Analytics 4`.
+```yml
+google_analytics: UA-xxxxxx-x
+```
 
 **NOTE:** `Google Analytics(Universal Analytics)` is no longer supported by Google until 2023.7.1
 
