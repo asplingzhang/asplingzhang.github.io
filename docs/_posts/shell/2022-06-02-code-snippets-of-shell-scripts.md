@@ -173,3 +173,149 @@ xxx.sh ${params[@]}
 
 ```
 
+# Define usage function and accpept user-input parameters(options) for shell
+We can define parameters(options) for shell script.
+- shell script accepts paramters(options) with or without specific value.
+
+## Paramter(Option) without value
+```shell
+function usage() {
+    echo "Shell function:It's an exmaple"
+    echo ""
+    echo "Usage:[-i input_parameters][-h help]"
+    echo -e "\t-i:explaination for input parameter"
+    echo -e "\t-h:show the usage"
+    exit 1;
+}
+
+
+input_param_i_set="false"
+while getopts "ih" arg; do
+  case $arg in
+    i)
+      input_param_i_set="true"
+      ;;
+    h | *) # Display help.
+      usage
+      exit 0
+      ;;
+  esac
+done
+
+```
+
+**NOTE:** take care about things below
+- Define parameter(option) without colon followed
+```shell
+while getopts "ih" arg; do
+```
+
+## Paramter(Option) with value
+```shell
+function usage() {
+    echo "Shell function:It's an exmaple"
+    echo ""
+    echo "Usage:[-i input_parameters][-h help]"
+    echo -e "\t-i:explaination for input parameter"
+    echo -e "\t-h:show the usage"
+    exit 1;
+}
+
+
+input_param_i_value=""
+while getopts "i:h" arg; do
+  case $arg in
+    i)
+      input_param_i_value=${OPTARG}
+      ;;
+    h | *) # Display help.
+      usage
+      exit 0
+      ;;
+  esac
+done
+
+```
+
+**NOTE:** take care about two things below
+- Define parameter(option) with colon followed
+```shell
+while getopts "i:h" arg; do
+```
+- Get value of parameter(option) by
+```shell
+input_param_i_value=${OPTARG}
+```
+
+# echo with colorful fonts
+Use `echo -e` to print colorful fonts.
+```shell
+echo -e "${RED}Error:${NOCOLOR}error happened,OMG."
+```
+
+## Color definitions
+A list of values of color used in shell script.
+```shell
+#!/bin/bash
+# ----------------------------------
+# Colors
+# ----------------------------------
+NOCOLOR='\033[0m'
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+ORANGE='\033[0;33m'
+BLUE='\033[0;34m'
+PURPLE='\033[0;35m'
+CYAN='\033[0;36m'
+LIGHTGRAY='\033[0;37m'
+DARKGRAY='\033[1;30m'
+LIGHTRED='\033[1;31m'
+LIGHTGREEN='\033[1;32m'
+YELLOW='\033[1;33m'
+LIGHTBLUE='\033[1;34m'
+LIGHTPURPLE='\033[1;35m'
+LIGHTCYAN='\033[1;36m'
+WHITE='\033[1;37m'
+```
+
+# Get result of the last run shell script
+Use `$?` to get the result of last run shell script.
+```shell
+last_runned_shell.sh
+if [ $? -eq 0 ]; then
+    echo "last shell run successfully."
+fi
+
+```
+
+# Check if a string is empty in shell scrpit
+Use `-z $string` to check if a string in shell scrpit is empty or not.
+```shell
+# check if string length is zero.
+if [ -z $info ] ;then
+    echo -e "${RED}Error:${NOCOLOR}info is empty."
+    exit 1
+fi
+```
+
+# Split a string to array in shell script
+Split a string to array ,with a specific separator `$separator`
+For exmaple,`separator="."`
+```shell
+info="10.2.3"
+array=(${info//./ })
+for num in ${array[@]}
+do
+    print_debug_info $num
+done
+```
+
+# Iterate an array in shell script
+Use `${array[@]}` for iterating over an array in shell script.
+```shell
+for num in ${array[@]}
+do
+    print_debug_info $num
+done
+```
+
