@@ -158,14 +158,16 @@ If you indent your string with tabs (i.e., '\t'), the indentation will be stripp
 
 NOTE: It is significant that the last closing parenthesis is on another line. The END text must appear on a line by itself.
 
-# Append variable to shell
-
+# Append parameters(options) to shell
+Sometimes,we need appending parameters(options) to a shell script.
+- first of all,we decide which parameter(option) needed to be added to the target shell script.
+- we use an array to contain all the parameters(options) and then pass it to the target shell script by calling `xxx.sh ${params[@]}`
 ```shell
 params=("")
-if [[ $enable_phpl == "true" ]];then
-    params+=(-p)
+if [[ $enable_xx == "true" ]];then
+    params+=(-x)
 fi
-if [[ $enable_file_video_capturer == "true" ]];then
+if [[ $enable_xx_2 == "true" ]];then
     params+=(-f)
 fi
 echo -e "Parameters  is:${params[@]}"
@@ -310,6 +312,17 @@ do
 done
 ```
 
+# Define an array in sehll script
+```shell
+#list variables which defined all arches
+all_arches=("arm64"
+"armv7"
+"i386"
+"x86_64"
+)
+
+```
+
 # Iterate an array in shell script
 Use `${array[@]}` for iterating over an array in shell script.
 ```shell
@@ -319,3 +332,27 @@ do
 done
 ```
 
+# Pass a multi-lines string to shell script
+- Define a multi-lines string as below
+- Use `''"$argrs"''` to pass it to the target shell script,otherwise,it will be failed.
+
+```shell
+args=$(cat <<-END
+target_os="ios"
+target_cpu="arm64"
+END
+)
+
+gn gen out/ios --args=''"$args"'' --ide=xcode --script-executable=$python_path
+```
+
+# Handle result of command of which in shell script
+- Command 'which python' may retrun zero string when executed in shell,so we need check the size of result firstly.
+
+```shell
+# command 'which python' may retrun zero string when executed in shell.
+if [ -z $python_path ] || [[ $python_path == *"not found"* ]];then
+   echo "python not found."
+fi
+
+```
