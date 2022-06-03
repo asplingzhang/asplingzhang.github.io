@@ -6,23 +6,23 @@ categories: shell
 ---
 
 # Abstract
-Code snippets of shell scipts.
+Code snippets of shell scripts.
 
 # Checking file is existed or not
 
-```Shell
+```shell
 if [ -f "$file_path" ];then
 fi
 ```
 
 # Append output to end of file
-~~~
+```shell
 echo "output" >> dst_file
-~~~
+```
 
 # Substring in shell
 
-```Shell
+```shell
 string='My long string'
 if [[ $string == *"My long"* ]]; then
   echo "It's there!"
@@ -32,17 +32,17 @@ fi
 More details please see [substring](http://c.biancheng.net/view/1120.html)
 
 Get string from first ocurrance for "chars"
-```Shell
+```shell
  ${string#*chars}
 ```
 Get string from last ocurrance for "chars"
-```Shell
+```shell
 ${string##*chars}
 ```
 
 # Rename all files in direcotry
 
-```Shell
+```shell
 renameFileNameInDirRecursively(){
      if [[ $1 == "" ]]; then
        echo "Error:root_path is empty "
@@ -64,7 +64,7 @@ renameFileNameInDirRecursively(){
 
 # Checking if file has specific string
 
-```Shell
+```shell
 #Usually,if header file exists "namespace ",it means this file has been changed to C++. So remove them.
 if [ $(grep -c "namespace " $file) -ne 0 ];then
     regex=$(echo $file|sed "s#\/#\\\/#g")
@@ -74,7 +74,7 @@ fi
 
 # Checking character is uppper or lower
 
-```Shell
+```shell
 cat $symbols_file_uniq | while read symbol;do
        # First, get the first character.
        first=${symbol:0:1}
@@ -98,27 +98,27 @@ cat $symbols_file_uniq | while read symbol;do
 
 # Get absolute path of executed script
 
-```Shell
+```shell
 ABS_PATH=$(readlink -f $0)
 ABS_DIR=$(dirname $ABS_PATH)
 ```
 
 # Import another script in shell
 
-```Shell
+```shell
 source absolute_path/import.sh
 ```
 
 # Insert string at index of string
 
 Insert at index 1 of string $string
-~~~
+```shell
 sed -i "s/${string:0:1}\(${string:1}\)/${string:0:1}$insert\1/g"
-~~~
+```
 
 # Use alias in shell scripts
 
-```Shell
+```shell
 OS_TYPE=$(uname)
 echo -e ${GREEN} Current OS is:$OS_TYPE${NOCOLOR}
 if [[ $OS_TYPE == "Darwin" ]]; then
@@ -138,7 +138,7 @@ fi
 
 # Make git using language of english in shell scripts
 
-```Shell
+```shell
 LANG=en_US.UTF-8
 ```
 
@@ -177,7 +177,7 @@ xxx.sh ${params[@]}
 We can define parameters(options) for shell script.
 - shell script accepts paramters(options) with or without specific value.
 
-## Paramter(Option) without value
+## Parameter(Option) without value
 ```shell
 function usage() {
     echo "Shell function:It's an exmaple"
@@ -210,7 +210,7 @@ done
 while getopts "ih" arg; do
 ```
 
-## Paramter(Option) with value
+## Parameter(Option) with value
 ```shell
 function usage() {
     echo "Shell function:It's an exmaple"

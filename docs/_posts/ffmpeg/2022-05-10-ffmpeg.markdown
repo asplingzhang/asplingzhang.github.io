@@ -12,27 +12,27 @@ About compiling ffmpeg and common used commands of ffmpeg.
 see [build-ffmpeg-av1-svt](https://www.iiwnz.com/build-ffmpeg-av1-svt/)
 
 Scipts for configuring ffmpeg with av1
-~~~
+```shell
 ./configure  --prefix=/usr/local --enable-gpl --enable-nonfree --enable-libass --enable-ffplay \
 --enable-libfdk-aac --enable-libfreetype --enable-libmp3lame \
 --enable-libtheora --enable-libvorbis --enable-libvpx --enable-libx264 --enable-libx265 --enable-libopus --enable-libxvid \
 --enable-libaom --samples=fate-suite --extra-cflags=-I/usr/local/Cellar/sdl2/2.0.12_1/include/SDL2 --extra-ldflags=-L/usr/local/Cellar/sdl2/2.0.12_1/lib
-~~~
+```
 
 * firstly ,compile `aom` to dir identified by `--prefix=`,details see av1/compile_av1.md
 * secondly,use scipts above to compile ffmpeg from source,`--enable-libaom` is specified.
 
-~~~
-  $  cd ffmpeg
-  $  ./confiure  with params above
-  $  make install
-~~~
+```shell
+$  cd ffmpeg
+$  ./confiure  with params above
+$  make install
+```
 
 # Common used commands of ffmpeg
 ## Convert a mp4 to mkv using av1 codec
-~~~
-  $ ffmpeg -i Samsung_Demo_Video.mp4 -c:v libaom-av1 -crf 30 -cpu-used 8 -row-mt 1  -usage 1 -threads 8 -b:v 2M av1_test.mkv
-~~~
+```shell
+$ ffmpeg -i Samsung_Demo_Video.mp4 -c:v libaom-av1 -crf 30 -cpu-used 8 -row-mt 1  -usage 1 -threads 8 -b:v 2M av1_test.mkv
+```
 
 The encoding speed is really slow if these options not set
 * -usage
@@ -41,48 +41,48 @@ The encoding speed is really slow if these options not set
 * -threads
 
 ## Convert a mp4 to mkv using h264 codec
-~~~
-  $ ffmpeg -i Samsung_Demo_Video.mp4 -c:v h264 -b:v 200K av1_test_h264.mkv
-~~~
+```shell
+$ ffmpeg -i Samsung_Demo_Video.mp4 -c:v h264 -b:v 200K av1_test_h264.mkv
+```
 ## Convert av1 to h264 loselessly
-~~~
-  $ ffmpeg -i input -c:v libx264 -preset veryslow -qp 0 output.mkv
-~~~
+```shell
+$ ffmpeg -i input -c:v libx264 -preset veryslow -qp 0 output.mkv
+```
 or
-~~~
-  $ ffmpeg -i input -c:v libx264 -preset veryslow -crf 0 output.mkv
-~~~
+```shell
+$ ffmpeg -i input -c:v libx264 -preset veryslow -crf 0 output.mkv
+```
 
 ## Decode ivf file
-~~~
+```shell
 > ffmpeg -i webrtc_receive_stream_281617081-592520956585.ivf -c:v libx264 ivf.mkv
-~~~
+```
 
 ## Rotate 90°
-~~~
-  $ ffmpeg -i Samsung_Demo_Video.mp4 -vf "transpose=1" output.mp4
-~~~
+```shell
+$ ffmpeg -i Samsung_Demo_Video.mp4 -vf "transpose=1" output.mp4
+```
 
-~~~
-  $ ffmpeg  -video_size 1280x720 -pixel_format yuv420p -i ConferenceMotion_1280_720_50.yuv -vf "transpose=1" ConferenceMotion_720_1280_50.yuv 
-~~~
+```shell
+$ ffmpeg  -video_size 1280x720 -pixel_format yuv420p -i ConferenceMotion_1280_720_50.yuv -vf "transpose=1" ConferenceMotion_720_1280_50.yuv 
+```
 
 ## Convert .mp4 to .y4m
-~~~
-  $ ffmpeg -y -i samsung_demo_video.mp4 -pix_fmt yuv420p  -an ref.y4m
-~~~
+```
+$ ffmpeg -y -i samsung_demo_video.mp4 -pix_fmt yuv420p  -an ref.y4m
+```
 
 ## Convert .yuv to .y4m
-~~~
-  $ ffmpeg -video_size 1280x720 -framerate 25 -pixel_format yuv420p -i ConferenceMotion_1280_720_50.yuv ConferenceMotion_1280_720_50.y4m
-~~~
+```shell
+$ ffmpeg -video_size 1280x720 -framerate 25 -pixel_format yuv420p -i ConferenceMotion_1280_720_50.yuv ConferenceMotion_1280_720_50.y4m
+```
 
 If the converted .y4m file is used as the input file of `FileVideoCapturer` in WebRTC,you NEED replace `C420jpeg` to `C420` in the first line of the file,otherwise,it will break `FileVideoCapturer`.
 
 ## Convert .mp4 to .yuv
-~~~
-  $  ffmpeg -i samsung_Demo_Video_720x1280_200kbps.mp4 -c:v rawvideo -pix_fmt yuv420p samsung_Demo_Video_720x1280_200kbps.yuv
-~~~
+```shell
+$  ffmpeg -i samsung_Demo_Video_720x1280_200kbps.mp4 -c:v rawvideo -pix_fmt yuv420p samsung_Demo_Video_720x1280_200kbps.yuv
+```
 
 ## Convert .ivf to .mp4
 
@@ -93,7 +93,7 @@ When converting .ivf(which contains H.264),`-vsync 2` is needed,otherwise,conver
 **NOTE:** if .ivf containing AV1,`-vsync 2` is not needed.
 
 
-~~~
+```shell
 ➜ ffmpeg ffmpeg -i h264_720_1280.ivf -c:v libx264 -crf 18 -profile:v baseline h264.mp4
 ffmpeg version N-105291-gdcc9454ab9 Copyright (c) 2000-2022 the FFmpeg developers
   built with Apple clang version 13.0.0 (clang-1300.0.29.3)
@@ -174,23 +174,23 @@ video:22782kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing
 [libx264 @ 0x7fcd70107ac0] i8c dc,h,v,p: 39% 22% 25% 14%
 [libx264 @ 0x7fcd70107ac0] ref P L0: 87.8%  8.2%  4.1%
 [libx264 @ 0x7fcd70107ac0] kb/s:2466.52
-~~~
+```
 
 ## Convert .ivf to .yuv
-~~~
-  $ ffmpeg -i webrtc_receive_stream_3634942123-65095821676.ivf -c:v rawvideo -pix_fmt yuv420p av1_720_1280_ref.yuv
-~~~
+```shell
+$ ffmpeg -i webrtc_receive_stream_3634942123-65095821676.ivf -c:v rawvideo -pix_fmt yuv420p av1_720_1280_ref.yuv
+```
 
 
 ## ffplay .yuv
-~~~
-  $ ffplay -f rawvideo -pixel_format yuv420p -video_size 1280x720 -i ref.yuv
-~~~
+```shell
+$ ffplay -f rawvideo -pixel_format yuv420p -video_size 1280x720 -i ref.yuv
+```
 
 ## ffprobe show all frames info
-~~~
-  $ ffprobe -show_frames -f rawvideo -pixel_format yuv420p -video_size 720x1280 av1_720_1280_test.yuv > av1_all_frames_info.log
-~~~
+```shell
+$ ffprobe -show_frames -f rawvideo -pixel_format yuv420p -video_size 720x1280 av1_720_1280_test.yuv > av1_all_frames_info.log
+```
 
 result format as below:
 >[FRAME]
@@ -227,30 +227,30 @@ result format as below:
 * `pts` or `pkt_dts` is the frame sequence number.
 
 ## Keep  number of frames from start position left in .yuv
-~~~
-  $ ffmpeg -video_size 720x1280 -i av1_720_1280_test.yuv -frames 1627 -c:v copy -video_size 720x1280 av1_720_1280_test_2.yuv
-~~~
+```shell
+$ ffmpeg -video_size 720x1280 -i av1_720_1280_test.yuv -frames 1627 -c:v copy -video_size 720x1280 av1_720_1280_test_2.yuv
+```
 
 * Raw video does not contain info about the picture size,so we need specify `-video_size` before `-i`
 
 ## Keep number of frames in range left in .yuv
-~~~
-  $ ffmpeg -video_size 720x1280 -i h264_720_1280_ref.yuv -vf "select=gte(n\,20)*lt(n\,1626)" -c:v rawvideo -pix_fmt yuv420p  h264_720_1280_ref_2.yuv
-~~~
+```shell
+$ ffmpeg -video_size 720x1280 -i h264_720_1280_ref.yuv -vf "select=gte(n\,20)*lt(n\,1626)" -c:v rawvideo -pix_fmt yuv420p  h264_720_1280_ref_2.yuv
+```
 
 * frames in range[20,1627) will be kept left in result file.frames in range[0,20) are deleted. 
 
 ## Extract one specific frame from video file
-~~~
-  $ ffmpeg  -video_size 720x1280 -i av1_720_1280_test_2.yuv -vf "select=eq(n\,1606)" -vframes 1 out.png
-~~~
+```shell
+$ ffmpeg  -video_size 720x1280 -i av1_720_1280_test_2.yuv -vf "select=eq(n\,1606)" -vframes 1 out.png
+```
 
 * counting starts at 0, so 35th = n value of 34.
 
 ## Set profile and level for H.264
-~~~
-  $ ffmpeg -i h264_720_1280.ivf -c:v libx264 -crf 18 -profile:v baseline h264.mp4
-~~~
+```shell
+$ ffmpeg -i h264_720_1280.ivf -c:v libx264 -crf 18 -profile:v baseline h264.mp4
+```
 
 * baseline
 * main
@@ -261,21 +261,21 @@ When encoding with libx264, you can set the H.264 profile and level with:
 * -level:v – as defined in Annex A of the H.264 standard, e.g., 4.0.
 
 ## Resize video resolution
-~~~
-  $ ffmpeg -i input.mp4 -vf scale=-1:720 output.mp4
-  $ ffmpeg -i input.mp4 -vf scale=1280:720 output.mp4
-  $ ffmpeg -i input.mp4 -vf scale=1280:-1 output.mp4
-~~~
+```shell
+$ ffmpeg -i input.mp4 -vf scale=-1:720 output.mp4
+$ ffmpeg -i input.mp4 -vf scale=1280:720 output.mp4
+$ ffmpeg -i input.mp4 -vf scale=1280:-1 output.mp4
+```
 
 # Use ffmpeg to join video files
 see [create_mosaic_out_several_input_videos][create_mosaic_out_several_input_videos]
 
 ## Horizontal
-~~~
-  $ ffmpeg -i h264_1mkv -i h264_2.mkv -filter_complex "[0:v][1:v]hstack"  horizontal.mkv
-~~~
+```shell
+$ ffmpeg -i h264_1mkv -i h264_2.mkv -filter_complex "[0:v][1:v]hstack"  horizontal.mkv
+```
 or
-~~~
+```shell
 ffmpeg -i h264_1.mkv -i h264_2.mkv -filter_complex \
 "nullsrc=size=2560x720 [base]; \
 [0:v] setpts=PTS-STARTPTS, scale=1280x720 [left]; \
@@ -284,26 +284,26 @@ ffmpeg -i h264_1.mkv -i h264_2.mkv -filter_complex \
 [tmp1][right] overlay=shortest=1:x=1280 \
 " horizontal.mkv
 
-~~~
+```
 
 ## Vertical
-~~~
-  $ ffmpeg -i h264_1mkv -i h264_2.mkv -filter_complex "[0:v][1:v]vstack"  vertical.mkv
-~~~
+```
+$ ffmpeg -i h264_1mkv -i h264_2.mkv -filter_complex "[0:v][1:v]vstack"  vertical.mkv
+```
 or
-~~~
-  $ ffmpeg -i h264_1.mkv -i h264_2.mkv -filter_complex "nullsrc=size=1280x1440 [base];[0:v] setpts=PTS-STARTPTS, scale=1280x720 [top]; [1:v] setpts=PTS-STARTPTS, scale=1280x720 [bottom]; [base][top] overlay=shortest=1 [tmp1]; [tmp1][bottom] overlay=shortest=1:y=720  " vertical.mkv
-~~~
+```shell
+$ ffmpeg -i h264_1.mkv -i h264_2.mkv -filter_complex "nullsrc=size=1280x1440 [base];[0:v] setpts=PTS-STARTPTS, scale=1280x720 [top]; [1:v] setpts=PTS-STARTPTS, scale=1280x720 [bottom]; [base][top] overlay=shortest=1 [tmp1]; [tmp1][bottom] overlay=shortest=1:y=720  " vertical.mkv
+```
 or
-~~~
-   $ ffmpeg -i h264_1.mkv -i h264_2.mkv -filter_complex \
+```shell
+ $ ffmpeg -i h264_1.mkv -i h264_2.mkv -filter_complex \
 "nullsrc=size=1280x1440 [base]; \
 [0:v] setpts=PTS-STARTPTS, scale=1280x720 [top]; \
 [1:v] setpts=PTS-STARTPTS, scale=1280x720 [bottom]; \
 [base][top] overlay=shortest=1 [tmp1]; \
 [tmp1][bottom] overlay=shortest=1:y=720 \
 " vertical.mkv
-~~~
+```
 
 # References
 [ffmpeg-filters-overlay]: https://ffmpeg.org/ffmpeg-filters.html#overlay-1
