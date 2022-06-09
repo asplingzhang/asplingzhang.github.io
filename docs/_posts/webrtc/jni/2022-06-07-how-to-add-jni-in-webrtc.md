@@ -2,7 +2,7 @@
 layout: default
 title:  "How to add jni in WebRTC"
 date:   2022-06-07 15:31:33 +0800
-categories: webrtc
+categories: [webrtc,jni]
 ---
 
 # Abstract
@@ -117,6 +117,18 @@ static jboolean JNI_LibaomAv1Encoder_IsSupported(JNIEnv* jni) {
 #include "sdk/android/generated_libaom_av1_jni/LibaomAv1Encoder_jni.h"
 ```
 
+**NOTE:** method definitions MUST be the same within the automacitically generated `LibaomAV1Encoder_jni.h`,otherwise,compling failed as below.
+```shell
+In file included from ../../sdk/android/src/jni/scalability_helpers.cc:14:
+gen/sdk/android/generated_scalability_helpers_jni/ScalabilityHelpers_jni.h:54:13: error: function 'xwebrtc::jni::JNI_ScalabilityHelpers_GetNumberOfSpatialLayers' has internal linkage but is not defined [-Werror,-Wundefined-internal]
+static jint JNI_ScalabilityHelpers_GetNumberOfSpatialLayers(JNIEnv* env, const
+            ^
+gen/sdk/android/generated_scalability_helpers_jni/ScalabilityHelpers_jni.h:61:10: note: used here
+  return JNI_ScalabilityHelpers_GetNumberOfSpatialLayers(env,
+         ^
+1 error generated.
+```
+
 ## What's the automatically generated jni looks like
 Location of genrerated jni is at `out/arm/gen/sdk/android/generated_libaom_av1_jni/LibaomAv1Encoder_jni.h`
 ```c++
@@ -183,3 +195,4 @@ JNI_GENERATOR_EXPORT jboolean Java_org_webrtc_LibaomAv1Encoder_nativeIsSupported
 #endif  // org_webrtc_LibaomAv1Encoder_JNI
 
 ```
+
