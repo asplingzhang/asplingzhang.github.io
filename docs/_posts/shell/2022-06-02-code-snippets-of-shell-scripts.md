@@ -356,3 +356,55 @@ if [ -z $python_path ] || [[ $python_path == *"not found"* ]];then
 fi
 
 ```
+
+# Get current date as yyyy-mm-dd format in shell script
+```shell
+date=$(date '+%Y-%m-%d')
+```
+
+# Get current date as yyyy-mm-dd HH:MM:SS format in shell script
+```shell
+date=$(date '+%Y-%m-%d %H:%M:%S')
+```
+
+# Get current date as HH:MM:SS format in shell script
+```shell
+date=$(date '+%H:%M:%S')
+```
+
+# Get line number of specific string in file in shell script
+Use `grep+awk+sed` to archive that.
+```shell
+line_num=$(grep -n $filename $sitemap_xml | awk '{print $1}' | sed "s/://g")
+```
+
+# Convert string to int in shell script
+Use operator `$((...))`.
+```shell
+# line_num here is string
+line_num=$(grep -n $filename $sitemap_xml | awk '{print $1}' | sed "s/://g")
+line_num_next=$(($line_num+1))
+```
+
+# Delete line with specific line number in shell script
+Use command like `sed -i "1d" file`.
+```shell
+gsed -i "${line_num}d" $sitemap_xml
+```
+
+# Repalce a line with specific line number of file in shell script
+For example ,replace `$line_num` with new content.Using `sed "2 i content_of_line"`.
+```shell
+date_yyyy_mm_dd=$(date '+%Y-%m-%d')
+hh_mm_ss=$(date '+%H:%M:%S')
+gsed -i  "$line_num i \ \ \ \ \ \ <lastmod>${date_yyyy_mm_dd}T${hh_mm_ss}+08:00</lastmod>" $sitemap_xml
+```
+**Note:** we use `\ ` here to escape blank .otherwise,thers will no blanks at head of the inserted line.
+
+# Add/Insert a new line after specific line number of file in shell script
+For example,add a new line after line `$line_num`,using `sed "2 a content_of_line"`.
+```shell
+date_yyyy_mm_dd=$(date '+%Y-%m-%d')
+hh_mm_ss=$(date '+%H:%M:%S')
+gsed -i  "$line_num a \ \ \ \ \ \ <lastmod>${date_yyyy_mm_dd}T${hh_mm_ss}+08:00</lastmod>" $sitemap_xml
+```
