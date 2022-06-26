@@ -1,4 +1,6 @@
 #!/bin/bash
+SCRIPT_ABS_PATH="$(cd "$(dirname "$0")" && pwd)"
+
 usage() {
     echo "Shell function:"
     echo "Use template to create a markdown file under the current directory for writting articles powered by github pages"
@@ -8,15 +10,15 @@ usage() {
     echo -e "\t-h:show the usage"
 }
 
-sitemap_xml_path="/Users/klaus/dev/src/github/asplingzhang.github.io/docs/sitemap.xml"
-
 filename=""
 title=""
+url_without_date=""
 while getopts "n:h" arg; do
   case $arg in
     n)
       filename=${OPTARG}
       title=$filename
+      url_without_date=$filename
       if [[ $filename == "" ]] ;then
           echo "Error:file name is empty."
           exit 1
@@ -65,22 +67,6 @@ echo "" >> $filename
 echo "# Copyright notice" >> $filename
 echo "All Rights Reserved.Any reprint/reproduce/redistribution of this article MUST indicate the source. " >> $filename
 
-#Update sitemap.xml
+#Update sitemap.xml for new added article and the `lastmod` of home index `https://asplingzhang.github.io/`
 
-#    <url>
-#      <loc>https://asplingzhang.github.io/</loc>
-#        <lastmod>2022-06-07T19:25:58+08:00</lastmod>
-#    </url>
-#   </urlset>
-
-if [ ! -f $simtemap_xml_path ];then
-    echo "Error:sitemap.xml is not existed at $sitemap_xml_path"
-    exit 1
-fi
-gsed -i "/<\/urlset>/d" $sitemap_xml_path
-echo "    <url>" >> $sitemap_xml_path
-echo "      <loc>https://asplingzhang.github.io/$title</loc>" >> $sitemap_xml_path
-hh_mm_ss=$(date '+%H:%M:%S')
-echo "      <lastmod>${date_yyyy_mm_dd}T${hh_mm_ss}+08:00</lastmod>" >> $sitemap_xml_path
-echo "    </url>" >> $sitemap_xml_path
-echo "</urlset>" >> $sitemap_xml_path
+$SCRIPT_ABS_PATH/update_github_pages_sitemap.sh -n "$url_without_date"
