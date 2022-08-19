@@ -196,3 +196,61 @@ JNI_GENERATOR_EXPORT jboolean Java_org_webrtc_LibaomAv1Encoder_nativeIsSupported
 
 ```
 
+## Issues encountered
+### java.lang.ClassNotFoundException when loading Java class by jni
+Errors as below:
+```shell
+08-19 10:56:40.762 27527 27631 W System.err: java.lang.ClassNotFoundException: Didn't find class "org.webrtc.RTCVideoCodecPerformanceProbeResult$RTCVideoCodecPerformanceProbeResult" on path: DexPathList[[zip file "/data/app/com.xx.mobile.coredemo-hITeGmuPpKxq-VLBRsjI-A==/base.apk"],nativeLibraryDirectories=[/data/app/com.xx.mobile.artvccoredemo-hITeGmuPpKxq-VLBRsjI-A==/lib/arm, /data/app/com.xx.mobile.artvccoredemo-hITeGmuPpKxq-VLBRsjI-A==/base.apk!/lib/armeabi, /system/lib, /system/product/lib]]
+08-19 10:56:40.762 27527 27631 W System.err: 	at dalvik.system.BaseDexClassLoader.findClass(BaseDexClassLoader.java:196)
+08-19 10:56:40.762 27527 27631 W System.err: 	at java.lang.ClassLoader.loadClass(ClassLoader.java:379)
+08-19 10:56:40.762 27527 27631 W System.err: 	at java.lang.ClassLoader.loadClass(ClassLoader.java:312)
+08-19 10:56:40.762 27527 27631 E rtc     : 
+08-19 10:56:40.762 27527 27631 E rtc     : 
+08-19 10:56:40.762 27527 27631 E rtc     : #
+08-19 10:56:40.762 27527 27631 E rtc     : # Fatal error in: ../../sdk/android/native_api/jni/class_loader.cc, line 53
+08-19 10:56:40.762 27527 27631 E rtc     : # last system error: 0
+08-19 10:56:40.762 27527 27631 E rtc     : # Check failed: !env->ExceptionCheck()
+08-19 10:56:40.762 27527 27631 E rtc     : # 
+```
+
+`org.webrtc.RTCVideoCodecPerformanceProbeResult$RTCVideoCodecPerformanceProbeResult` means that the class path is within class `RTCVideoCodecPerformanceProbeResult`,try to finding an internal class named `RTCVideoCodecPerformanceProbeResult` within the class `RTCVideoCodecPerformanceProbeResult`.However,we don't have any internal class `RTCVideoCodecPerformanceProbeResult` within `RTCVideoCodecPerformanceProbeResult`.
+
+So the problem caused by a wrong setting on `@CalledByNative`
+```Java
+public class RTCVideoCodecPerformanceProbeResult {
+
+    @CalledByNative("RTCVideoCodecPerformanceProbeResult")
+    RTCVideoCodecPerformanceProbeResult(String codecName,
+    }
+}
+```
+
+The valid class path is `org.webrtc.RTCVideoCodecPerformanceProbeResult` ,we need setting `@CalledByNative` without specifying any sub path for the original class.
+
+```Java
+public class RTCVideoCodecPerformanceProbeResult {
+
+    @CalledByNative
+    RTCVideoCodecPerformanceProbeResult(String codecName,
+    }
+}
+```
+
+However,if we add an internal class within `RTCVideoCodecPerformanceProbeResult` and then need adding sub path for which.
+
+```Java
+public class RTCVideoCodecPerformanceProbeResult {
+public static class XXX{
+    @CalledByNative("XXX")
+    XXX(String codecName,
+    }
+
+}
+
+    @CalledByNative
+    RTCVideoCodecPerformanceProbeResult(String codecName,
+    }
+
+}
+```
+The class path for `XXX` is  then `org.webrtc.RTCVideoCodecPerformanceProbeResult$XXX`
