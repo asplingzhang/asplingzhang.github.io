@@ -220,7 +220,7 @@ So the problem caused by a wrong setting on `@CalledByNative`
 public class RTCVideoCodecPerformanceProbeResult {
 
     @CalledByNative("RTCVideoCodecPerformanceProbeResult")
-    RTCVideoCodecPerformanceProbeResult(String codecName,
+    RTCVideoCodecPerformanceProbeResult(){
     }
 }
 ```
@@ -231,7 +231,7 @@ The valid class path is `org.webrtc.RTCVideoCodecPerformanceProbeResult` ,we nee
 public class RTCVideoCodecPerformanceProbeResult {
 
     @CalledByNative
-    RTCVideoCodecPerformanceProbeResult(String codecName,
+    RTCVideoCodecPerformanceProbeResult(){
     }
 }
 ```
@@ -242,13 +242,13 @@ However,if we add an internal class within `RTCVideoCodecPerformanceProbeResult`
 public class RTCVideoCodecPerformanceProbeResult {
 public static class XXX{
     @CalledByNative("XXX")
-    XXX(String codecName,
+    XXX(){
     }
 
 }
 
     @CalledByNative
-    RTCVideoCodecPerformanceProbeResult(String codecName,
+    RTCVideoCodecPerformanceProbeResult(){
     }
 
 }
