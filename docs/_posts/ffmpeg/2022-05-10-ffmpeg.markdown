@@ -28,6 +28,13 @@ $  ./confiure  with params above
 $  make install
 ```
 
+Scripts for builidng ffmpeg with default fetures and enable shared library.
+```shell
+./configure  --prefix=/usr/local --enable-shared
+make -j14
+make install
+```
+
 # Common used commands of ffmpeg
 ## Convert a mp4 to mkv using av1 codec
 ```shell
