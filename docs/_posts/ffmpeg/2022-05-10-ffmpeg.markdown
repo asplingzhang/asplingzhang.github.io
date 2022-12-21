@@ -22,6 +22,27 @@ Scipts for configuring ffmpeg with av1
 * firstly ,compile `aom` to dir identified by `--prefix=`,details see av1/compile_av1.md
 * secondly,use scipts above to compile ffmpeg from source,`--enable-libaom` is specified.
 
+updated command
+~~~
+./configure  --prefix=/usr/local --enable-gpl --enable-nonfree --enable-libass --enable-ffplay \
+--enable-libfdk-aac --enable-libfreetype --enable-libmp3lame \
+--enable-libtheora --enable-libvorbis --enable-libvpx --enable-libx264 --enable-libx265 --enable-libopus --enable-libxvid \
+--enable-libaom --samples=fate-suite
+~~~
+
+~~~
+  $  cd ffmpeg
+  $  ./confiure  with params above
+  $  make -j16 && make install
+~~~
+
+Branch information for FFmpeg and libaom,it's be proved working okay.other versions may not work.(for example,ffmpeg use 5.1,and libaom use 3.5.0,decode fails.)
+~~~
+ffmpeg use branch 5.1
+libaom use branch electric-sky
+~~~
+
+
 ```shell
 $  cd ffmpeg
 $  ./confiure  with params above
@@ -36,6 +57,14 @@ make install
 ```
 
 # Common used commands of ffmpeg
+## Convert a .mov to .mp4,scale resolution/fps
+front_camera_face.MOV is captured by front camera of iPhone,resolution is 1080p ,fps is 30.
+~~~
+ffmpeg -i front_camera_face.MOV -vf scale=720:1280  -r 15 -preset slow -crf 18 front_camera_face_720x1280.mp4
+ffmpeg -i front_camera_face_720x1280.mp4 -vf scale=540:960  -r 15 -preset slow -crf 18 front_camera_face_540x960.mp4
+ffmpeg -i front_camera_face_720x1280.mp4 -vf scale=360:640  -r 15 -preset slow -crf 18 front_camera_face_360x640.mp4
+~~~
+
 ## Convert a mp4 to mkv using av1 codec
 ```shell
 $ ffmpeg -i Samsung_Demo_Video.mp4 -c:v libaom-av1 -crf 30 -cpu-used 8 -row-mt 1  -usage 1 -threads 8 -b:v 2M av1_test.mkv
@@ -181,6 +210,11 @@ video:22782kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing
 [libx264 @ 0x7fcd70107ac0] i8c dc,h,v,p: 39% 22% 25% 14%
 [libx264 @ 0x7fcd70107ac0] ref P L0: 87.8%  8.2%  4.1%
 [libx264 @ 0x7fcd70107ac0] kb/s:2466.52
+```
+
+or 
+```shell
+ffmpeg -i $test_file_ivf -c:v copy $test_file_mp4
 ```
 
 ## Convert .ivf to .yuv
