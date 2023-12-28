@@ -48,6 +48,13 @@ gn gen out/mac --args='target_os="mac" target_cpu="x64" is_debug=true treat_warn
 ninja -C out/mac
 ```
 
+If autoninja is used,and failed to run due to python not found,please change python to python3 in the executable file autoninja located ad src/thrid_party/depot_tools.
+```shell
+# Execute whatever is printed by autoninja.py.
+# Also print it to reassure that the right settings are being used.
+python3 "$(dirname -- "$0")/autoninja.py" "$@"
+```
+
 ## Run unit tests for macOS
 All the unit tests are compiled to several executables.
 If we want to run a test named "X",firstly,we need know that which executable contains this unit test.
@@ -201,5 +208,56 @@ ModuleNotFoundError: No module named 'lldbinit'
 TBC
 # Build and run unit test for android
 TBC
+# Debug with VS Code
+## Add target name in launch.json
+- `"MIMode": "lldb",` 
+
+```json
+{
+      "name": "modules_unittests",
+      "type": "cppdbg", // "cppdbg" for GDB/LLDB, "cppvsdbg" for Windows Visual Studio debugger
+      "request": "launch",
+      "targetArchitecture": "x64",
+      "program": "${workspaceFolder}/out/mac/modules_unittests",
+      "args": [
+        "--gtest_filter=AimdRateControlTest.SetEstimateUpperLimitedByNetworkEstimate"
+        // "--single-process-tests",
+        // "--ui-test-action-max-timeout=1000000",
+        // "--test-launcher-timeout=1000000"
+      ],
+      "preLaunchTask": "10-build_test_debug",
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}/out/mac/",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "lldb",
+      // "miDebuggerPath": "/usr/bin/lldb",
+      "sourceFileMap": {
+        "../../modules/": "/Users/klaus/dev/src/webrtc/google/src/modules/"
+      }
+    },
+```
+
+## Add task in tasks.json
+```json
+{
+      "label": "10-build_test_debug",
+      "type": "shell",
+      "command": "autoninja",
+      "args": [
+        "-C",
+        "${workspaceFolder}/out/mac",
+        "modules_unittests"
+        // "components_unittests",
+        // "browser_tests",
+        // "extensions_unittests",
+        // "ash_unittests"
+      ]
+    },
+```
+
+## How to fix problem that SourceRequest not support ../
+By adding `sourceFileMap` in `launch.json`
+
 # Copyright notice
 All Rights Reserved.Any reprint/reproduce/redistribution of this article MUST indicate the source. 
