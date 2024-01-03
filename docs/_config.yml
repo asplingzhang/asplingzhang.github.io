@@ -29,7 +29,7 @@ google_analytics: G-HDGMRC9MQ1
 
 # Build settings
 #theme: jekyll-theme-cayman
-theme: jekyll/cayman
+remote_theme: pages-themes/cayman@v0.2.0
 # Change the format of url to asplingzhang.github.io/categories/title,rather than asplingzhang.github.io/category/2022/02/23/title.
 permalink: /:categories/:title/
 plugins:
