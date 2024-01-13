@@ -2,7 +2,7 @@
 layout: default
 title:  "How to add jni in WebRTC"
 date:   2022-06-07 15:31:33 +0800
-categories: [webrtc,jni]
+categories: webrtc
 ---
 
 # Abstract

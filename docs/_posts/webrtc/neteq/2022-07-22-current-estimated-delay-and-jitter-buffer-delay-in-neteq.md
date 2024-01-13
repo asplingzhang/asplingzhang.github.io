@@ -2,7 +2,7 @@
 layout: default
 title: "Google-private stats googCurrentDelayMs/googJitterBufferMs/googPreferredJitterBufferMs and standard stats item jitterBufferDelay/jitterBufferTargetDelay in NetEQ"
 date: 2022-07-22 11:34:50 +0800
-categories: [webrtc,neteq]
+categories: webrtc
 ---
 
 # Abstract

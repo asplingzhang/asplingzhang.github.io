@@ -2,7 +2,7 @@
 layout: default
 title: "Current delay and jitter buffer delay in jitter buffer of video"
 date: 2022-07-22 11:35:11 +0800
-categories: [webrtc,jitterbuffer]
+categories: webrtc
 ---
 
 # Abstract

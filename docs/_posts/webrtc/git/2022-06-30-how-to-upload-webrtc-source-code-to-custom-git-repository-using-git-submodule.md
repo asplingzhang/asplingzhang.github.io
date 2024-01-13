@@ -2,7 +2,7 @@
 layout: default
 title: "How to upload webrtc source code to custom git repository using git submodule"
 date: 2022-06-30 19:26:44 +0800
-categories: [webrtc,git]
+categories: webrtc
 ---
 
 # Abstract

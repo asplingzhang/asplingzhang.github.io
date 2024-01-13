@@ -2,7 +2,7 @@
 layout: default
 title: "How to build and run unit test of WebRTC"
 date: 2022-07-15 12:54:09 +0800
-categories: [webrtc,unittest]
+categories: webrtc
 ---
 
 # Abstract

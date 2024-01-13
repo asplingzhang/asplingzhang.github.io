@@ -2,7 +2,7 @@
 layout: default
 title: "Handle RTCP FIR PLI to generate key frame"
 date: 2022-07-29 14:36:02 +0800
-categories: [webrtc,rtcp]
+categories: webrtc
 ---
 
 # Abstract

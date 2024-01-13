@@ -2,7 +2,7 @@
 layout: default
 title: "How to use RTP header extension playout-delay to control the video delay"
 date: 2022-07-25 16:41:56 +0800
-categories: [webrtc,jitterbuffer]
+categories: webrtc
 ---
 
 # Abstract

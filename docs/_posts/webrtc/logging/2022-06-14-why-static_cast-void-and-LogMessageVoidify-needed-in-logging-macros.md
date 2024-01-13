@@ -2,7 +2,7 @@
 layout: default
 title:  "Why static_cast void(or (void)0) and LogMessageVoidify are needed in logging macros"
 date:   2022-06-14 14:25:33 +0800
-categories: [webrtc,logging]
+categories: webrtc
 ---
 
 # Abstract
