@@ -1,3 +1,8 @@
+---
+layout: default
+title: WebRTC Audio/Video Synchronization Details
+---
+
 # WebRTC Audio/Video Synchronization Details
 
 ## 1. Introduction to A/V Synchronization in WebRTC

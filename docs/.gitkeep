@@ -1,0 +1,6 @@
+# This file is intentionally left blank.
+# It is used to ensure that the 'docs' directory is tracked by Git,
+# especially when it might otherwise be empty or only contain files
+# that Git might ignore.
+# For GitHub Pages serving from the /docs directory, this helps maintain
+# the directory structure.

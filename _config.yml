@@ -1,0 +1,100 @@
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely edit after that. If you find
+# yourself editing this file very often, consider using Jekyll's data files
+# feature for the data you need to update frequently.
+#
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
+
+# Theme settings
+theme: jekyll-theme-hacker
+# Alternatively, to use another theme, for example jekyll-theme-cayman:
+# theme: jekyll-theme-cayman
+
+# Site settings
+# These are used to personalize your new site. If you look in the HTML files,
+# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
+# You can create any custom variable you would like, and they will be accessible
+# in the templates via {{ site.title }}, etc.
+
+title: WebRTC A/V Sync Deep Dive
+description: Detailed explanation of Audio/Video synchronization mechanisms in WebRTC.
+# email: your-email@example.com # Optional
+# baseurl: "" # the subpath of your site, e.g. /blog. Useful if you're hosting your site in a subdirectory.
+# url: "" # the base hostname & protocol for your site, e.g. http://example.com. Often detected automatically.
+
+# Build settings
+# markdown: kramdown # Default markdown processor
+# plugins: # Optional: add Jekyll plugins here if needed
+#   - jekyll-feed
+
+# Exclude from processing.
+# The following items will not be processed, by default. Create a custom list
+# to override the default setting.
+# exclude:
+#   - Gemfile
+#   - Gemfile.lock
+#   - node_modules
+#   - vendor/bundle/
+#   - vendor/cache/
+#   - vendor/gems/
+#   - vendor/ruby/
+
+# GitHub Pages specific settings (often not needed to be explicitly set if defaults are fine)
+# source: . # Default is repository root
+# destination: ./_site # Default build output directory
+# collections_dir: . # Default, can be changed if collections are stored elsewhere
+# github: [metadata] # Enables GitHub metadata plugin if available
+# future: true # To publish posts with future dates (if applicable)
+# show_drafts: false # To show drafts (if applicable)
+
+# Ensure this configuration is compatible with GitHub Pages.
+# Most themes supported by GitHub Pages work out of the box.
+# For serving from /docs directory on main branch, this _config.yml should be in the root.
+# The actual content files will be placed in /docs later.
+# No specific `source` or `destination` override is needed here for standard GitHub Pages theme usage
+# if the content will eventually be in the root or /docs and GitHub Pages settings are configured accordingly in the repo settings.
+# If GitHub Pages is set to serve from `/docs` on the `main` branch, Jekyll will build into `_site` as usual,
+# and then the contents of `_site` (or the source files themselves if no build step is configured for GitHub Pages explicitly for custom plugins)
+# need to be in the `/docs` directory.
+# For standard GitHub Pages themes, we just need to ensure our markdown files are in a place GitHub Pages will find them (root or /docs).
+# The theme choice `jekyll-theme-hacker` is a GitHub Pages supported theme.
+# No further explicit path configuration in _config.yml is usually needed for the theme itself to work.
+# The later step of moving content to /docs will handle the GitHub Pages serving requirement.
+#
+# Default settings for GitHub Pages:
+# source: .
+# destination: _site
+# However, if GitHub Pages is configured to build from a /docs folder, it means it expects the *source files* in /docs, not the _config.yml.
+# This task is about setting up _config.yml in the *repository root*.
+# The current setup assumes GitHub Pages will serve from the root or that content will be moved to /docs.
+# For now, this _config.yml is correct for being in the root and specifying a theme.
+# The structure for content to be in /docs will be handled by moving the markdown files there.
+#
+# For GitHub Pages, ensure `jekyll-github-metadata` plugin is available if you use `site.github` variables.
+# It's usually included by default when GitHub Pages builds the site.
+# plugins:
+#   - jekyll-github-metadata
+#
+# We will put our markdown files into /docs later.
+# The _config.yml stays in the root.
+# GitHub Pages will look for _config.yml in the root,
+# and if "docs" folder is selected as source, it will look for content there.
+# The theme selection in the root _config.yml will still apply.
+#
+# Final check for this task: _config.yml in root, theme set, title/description set. This looks good.
+# The comment about `source: .` and `destination: _site` is just to confirm understanding of Jekyll defaults,
+# not necessarily needing to be set if they are the defaults and GitHub Pages handles it.
+# The critical part is `theme: jekyll-theme-hacker`.
+# And that this _config.yml file itself is in the root.
+# The problem statement says "Given GitHub Pages is serving from the /docs directory on the main branch,
+# we need to ensure our content is placed there later, but the _config.yml itself lives in the root."
+# This is consistent with how GitHub Pages works: _config.yml in root, content source in /docs.
+# The theme specified in root _config.yml will be used for content in /docs.
+#
+# Adding a placeholder for plugins for good measure, though not strictly needed now.
+plugins:
+  - jekyll-seo-tag
+  - jekyll-github-metadata # Good for GitHub Pages integration
